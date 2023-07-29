@@ -1,5 +1,5 @@
 import { styled } from "styled-components"
-import { CheckOutlined, CloseOutlined, EditOutlined } from '@mui/icons-material';
+import { CheckOutlined, CloseOutlined, EditOutlined, FilterAltOutlined } from '@mui/icons-material';
 import DetailModal from "./modals/DetailModal";
 import EditModal from "./modals/EditModal";
 import { useEffect, useState } from "react";
@@ -63,6 +63,7 @@ const ToDoList = () => {
         }
     }
 
+
     const [selectedTodo, setSelectedTodo] = useState(null);
     const [selectedEditTodo, setSelectedEditTodo] = useState(null);
     const handleDetailModal = (todo) => {
@@ -79,7 +80,7 @@ const ToDoList = () => {
     //Check Butonuna tıklandığında yapılacaklar
     const handleCheck = async (_id) => {
         const checkedTodo = todos.find((todo) => todo._id === _id)
-        if(!checkedTodo){
+        if (!checkedTodo) {
             console.log("Boş todo")
             return
         }
@@ -94,7 +95,21 @@ const ToDoList = () => {
         }
     }
 
+    const [filterClicked, setFilterClicked] = useState(false)
     const [filterTitle, setFilterTitle] = useState("")
+
+    const filteredTodos = todos.filter((todo) => {
+        if (filterClicked === true) {
+            return (!todo.completed)
+        } else {
+            return (
+                filterTitle.toLocaleLowerCase() === ''
+                    ? todo.title
+                    : todo.title.toLocaleLowerCase().includes(filterTitle)
+            )
+        }
+    })
+
     let count = 1
     return (
         <>
@@ -110,7 +125,7 @@ const ToDoList = () => {
                 isOpen={modals.editModalIsOpen}
                 onRequestClose={() => closeModal('editModalIsOpen')}
                 _id={selectedEditTodo?._id}
-                
+
             />
             <MainDiv>
                 <TableWrapper>
@@ -118,24 +133,23 @@ const ToDoList = () => {
 
                         <thead>
                             <Tr>
-                                <ThId>No</ThId>
-                                <Th>
+                                <Th>No</Th>
+                                <ThFilter>
                                     <Search
                                         type="text"
                                         placeholder="Filter by title.."
                                         value={filterTitle}
                                         onChange={(e) => setFilterTitle(e.target.value)}>
                                     </Search>
-                                </Th>
+                                    <div>
+                                        <Filter onClick={()=>setFilterClicked(!filterClicked)} color={filterClicked ? "inherit" : "gray"} />
+                                    </div>
+                                </ThFilter>
                                 <Th>Actions</Th>
                             </Tr>
                         </thead>
                         <Tbody>
-                            {todos.filter((todo) => {
-                                return ((
-                                    filterTitle.toLocaleLowerCase() === '' ? todo.title : todo.title.toLocaleLowerCase().includes(filterTitle)
-                                ))
-                            }).map((todo) => (
+                            {filteredTodos.map((todo) => (
                                 <Tr key={todo._id}>
                                     <TdId>{count++}</TdId>
                                     <Tdtitle
@@ -209,11 +223,27 @@ const Th = styled.th`
     color:#FF597B ;
 `
 
-const ThId = styled(Th)`
-    
+const ThFilter = styled(Th)`
+    display: flex;
+    align-items: center;
+
+    div{
+        flex:1;
+        background-color:lightblue;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 `
 
+const Filter = styled(FilterAltOutlined)`
+    margin: 0 5px;
+    cursor: pointer;
+    color: ${(props) => props.color};
+`
 const Search = styled.input`
+    flex: 6;
     width: 100%;
     height: 100%;
     outline: none;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
-import { styled } from "styled-components"
+import {styled } from "styled-components"
 import { useSelector } from 'react-redux'
+import { motion } from 'framer-motion'
 
 const Quote = () => {
 
@@ -9,9 +10,9 @@ const Quote = () => {
 
     useEffect(() => {
         try {
-            if (quotes.length > 0) { 
+            if (quotes.length > 0) {
                 const quoteInterval = setInterval(() => {
-                    const randomIndex=Math.floor(Math.random()*quotes.length)
+                    const randomIndex = Math.floor(Math.random() * quotes.length)
                     setQuoteIndex(randomIndex)
                 }, 10000)
                 return () => clearInterval(quoteInterval)
@@ -22,15 +23,25 @@ const Quote = () => {
         }
     }, [quotes])
 
-
-
     return (
         <MainDiv >
             {quotes.length > 0 && (
-                <QuoteContainer>
-                    <QuoteContent>{quotes[quoteIndex].content}</QuoteContent>
-                    <QuoteAuthor>{quotes[quoteIndex].author}</QuoteAuthor>
-                </QuoteContainer>
+                <QuoteFrame>
+                    <QuoteContainer
+                        key={quotes[quoteIndex]._id}
+                        initial={{ y: 100, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1}}
+                        exit={{ y: -100, opacity: 0 }}
+                        transition={{ duration: 1.5 }}
+                    >
+                        <QuoteContent>
+                            {quotes[quoteIndex].content}
+                        </QuoteContent>
+                        <QuoteAuthor>
+                            {quotes[quoteIndex].author}
+                        </QuoteAuthor>
+                    </QuoteContainer>
+                </QuoteFrame>
             )
             }
         </MainDiv>
@@ -38,6 +49,7 @@ const Quote = () => {
 }
 
 export default Quote
+
 
 const MainDiv = styled.div`
     width:90%;
@@ -48,11 +60,18 @@ const MainDiv = styled.div`
     font-family:'Montserrat', sans-serif;
     padding: 5px;
     border-radius: 10px;
+    overflow: hidden;
+
 `
 
-const QuoteContainer = styled.div`
+const QuoteFrame = styled.div`
     border: 1px solid  #F9B5D0;
     border-radius: 10px;
+    height: 100%;
+    width: 100%;
+`
+
+const QuoteContainer = styled(motion.div)`
     height: 100%;
     width: 100%;
     padding: 5px;
@@ -61,6 +80,8 @@ const QuoteContainer = styled.div`
     align-items: center;
     justify-content: center;
 `
+
+
 
 const QuoteContent = styled.p`
     text-align: center;
@@ -87,3 +108,4 @@ const QuoteAuthor = styled.span`
         margin-left: 10px;
     }
 `
+

@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchData } from '../../features/todoSlice';
 import { toast } from "react-toastify";
+import { mobile } from '../../responsive'
 
 
 
@@ -110,7 +111,6 @@ const EditModal = ({ isOpen, onRequestClose, _id }) => {
                         <DatePicker
                             selected={startDate}
                             onChange={(date) => setStartDate(date)}
-                            // withPortal
                             calendarContainer={MyContainer}
                             customInput={<Input />}
                         >
@@ -139,6 +139,7 @@ const ModalContent = styled.div`
   color: white;
   width: 800px;
   height: 600px;
+  ${mobile({ minWidth: '200px', maxWidth: '300px', padding: '40px 10px' })}
 `
 
 const CloseIcon = styled(CloseOutlined)`
@@ -160,22 +161,20 @@ const CloseButton = styled.button`
     height: 30px;
     align-items: center;
     justify-content: center;
-    
+    ${mobile({ height: '25px', width: '25px' })}
 `
-
 
 const Form = styled.form`
     margin-top: 10px;
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 
     label{
         color: white;
         margin-right: 20px;
+        ${mobile({ fontSize: '0.9rem',marginRight:'10px' })}
     }
-
 `
 
 const TitleInput = styled.input`
@@ -233,7 +232,8 @@ const Button = styled.button`
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 1px;
-
+    ${mobile({padding:'0 15px',height:'35px'})}
+ 
     &:hover{
         background-color: #eeeeee;
         color: #FF597B;
@@ -245,6 +245,7 @@ const DateContainer = styled.div`
      padding: 10px;
      background: #35A29F;
      border-radius: 5px;
+     ${mobile({padding:'5px'})}
 
 `
 
@@ -270,6 +271,7 @@ const Input = styled.input`
     font-size: 16px;
     width: 120px;
     background-color: #F9B5D0;
+    ${mobile({width:'100px'})}
 
     &:focus{
     background-color: #EEEEEE;
@@ -287,6 +289,7 @@ const TodoState = styled.div`
 const TodoStateSpan = styled.span`
     margin-right: 10px;
     text-decoration: underline;
+    ${mobile({fontSize:'0.9rem'})}
 `
 const CheckIcon = styled(CheckOutlined)`
     background-color:${props => props.bgcolor};

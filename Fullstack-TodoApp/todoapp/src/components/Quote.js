@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import {styled } from "styled-components"
 import { useSelector } from 'react-redux'
 import { motion } from 'framer-motion'
+import {mobile} from '../responsive'
 
 const Quote = () => {
 
@@ -17,7 +18,6 @@ const Quote = () => {
                 }, 10000)
                 return () => clearInterval(quoteInterval)
             }
-
         } catch (error) {
 
         }
@@ -61,7 +61,7 @@ const MainDiv = styled.div`
     padding: 5px;
     border-radius: 10px;
     overflow: hidden;
-
+    ${mobile({margin:'0.5rem 0',width:'calc(100% - 1rem)'})};
 `
 
 const QuoteFrame = styled.div`
@@ -81,8 +81,6 @@ const QuoteContainer = styled(motion.div)`
     justify-content: center;
 `
 
-
-
 const QuoteContent = styled.p`
     text-align: center;
     font-size: 1rem;
@@ -93,11 +91,13 @@ const QuoteContent = styled.p`
     display: flex;
     align-items: center;
     justify-content: center;
+    ${mobile({fontSize:'0.8rem'})};
 `
 
 const QuoteAuthor = styled.span`
     color: white;
     font-weight: 400;
+    ${mobile({fontSize:'0.8rem'})};
 
     &::before{
         content: "***";

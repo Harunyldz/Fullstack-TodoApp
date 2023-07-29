@@ -4,6 +4,7 @@ import AddToDo from './components/AddToDo';
 import ToDoList from './components/ToDoList';
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
+import {mobile} from './responsive'
 
 const MainDiv = styled.div`
   background-color:#EEEEEE ;
@@ -15,6 +16,7 @@ const MainDiv = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  ${mobile({width:'100%', padding:'0px'})};
 `
 const H1 = styled.h1`
   font-family:'Montserrat', sans-serif;
@@ -22,6 +24,8 @@ const H1 = styled.h1`
   font-weight: 600;
   color:#FF597B ;
   margin:0;
+  ${mobile({fontSize:'28px'})};
+
 `
 
 function App() {

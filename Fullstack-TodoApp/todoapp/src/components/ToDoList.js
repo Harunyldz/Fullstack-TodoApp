@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchData } from "../features/todoSlice";
 import axios from 'axios'
 import { toast } from "react-toastify";
-
+import {mobile} from '../responsive'
 
 
 const ToDoList = () => {
@@ -49,7 +49,6 @@ const ToDoList = () => {
         setModals({ ...modals, [modalType]: false })
     }
 
-
     //Delete Butonuna tıklandığında yapılacaklar
     const handleDelete = async (_id) => {
         try {
@@ -63,7 +62,7 @@ const ToDoList = () => {
         }
     }
 
-
+    //Seçilen todonun belirlenmesi
     const [selectedTodo, setSelectedTodo] = useState(null);
     const [selectedEditTodo, setSelectedEditTodo] = useState(null);
     const handleDetailModal = (todo) => {
@@ -75,7 +74,6 @@ const ToDoList = () => {
         setSelectedEditTodo(todo)
         openModal('editModalIsOpen')
     }
-
 
     //Check Butonuna tıklandığında yapılacaklar
     const handleCheck = async (_id) => {
@@ -95,6 +93,7 @@ const ToDoList = () => {
         }
     }
 
+    //Filtreleme işlemleri
     const [filterClicked, setFilterClicked] = useState(false)
     const [filterTitle, setFilterTitle] = useState("")
 
@@ -130,7 +129,6 @@ const ToDoList = () => {
             <MainDiv>
                 <TableWrapper>
                     <Table>
-
                         <thead>
                             <Tr>
                                 <Th>No</Th>
@@ -170,11 +168,9 @@ const ToDoList = () => {
                                                 onClick={() => handleEdit(todo)}
                                             />
                                         </div>
-
                                     </TdActions>
                                 </Tr>
                             ))}
-
                         </Tbody>
                     </Table>
                 </TableWrapper>
@@ -191,6 +187,7 @@ const MainDiv = styled.div`
     height: 40vh;
     padding: 1rem;
     font-family:'Montserrat', sans-serif;
+    ${mobile({margin:'0 0 0.5rem 0',width:'calc(100% - 1rem)',padding:'0.2rem',height:'50vh'})};
 `
 
 const TableWrapper = styled.div`
@@ -201,12 +198,13 @@ const TableWrapper = styled.div`
 
 const Table = styled.table`
     width: 100%;
-
+    ${mobile({fontSize:'0.8rem'})};
 `
 
 const Tbody = styled.tbody`
     width: 100%;
 `
+
 const Tr = styled.tr`
     background-color: aliceblue;
     text-align: center;
@@ -221,6 +219,7 @@ const Th = styled.th`
     background-color: beige;
     height: 40px;
     color:#FF597B ;
+    ${mobile({height:'35px'})};
 `
 
 const ThFilter = styled(Th)`
@@ -242,8 +241,9 @@ const Filter = styled(FilterAltOutlined)`
     cursor: pointer;
     color: ${(props) => props.color};
 `
+
 const Search = styled.input`
-    flex: 6;
+    flex: 7;
     width: 100%;
     height: 100%;
     outline: none;
@@ -254,16 +254,19 @@ const Search = styled.input`
     font-family:'Montserrat', sans-serif;
     font-weight: 400;
     text-transform:capitalize;
+    ${mobile({fontSize:'0.8rem'})};
 `
 
 const Td = styled.td`
     height: 40px;
     padding: 0 10px;
+    ${mobile({height:'35px'})};
 `
 
 const TdId = styled(Td)`
     width: 10%;
 `
+
 const Tdtitle = styled(Td)`
     text-align: left;
     cursor: pointer;
@@ -286,6 +289,7 @@ const CheckIcon = styled(CheckOutlined)`
         color:#FF597B ;
     }
 `
+
 const CloseIcon = styled(CloseOutlined)`
     color:gray;
     cursor: pointer;
@@ -293,6 +297,7 @@ const CloseIcon = styled(CloseOutlined)`
         color: #000; ;
     }
 `
+
 const EditIcon = styled(EditOutlined)`
     color:gray;
     cursor: pointer;

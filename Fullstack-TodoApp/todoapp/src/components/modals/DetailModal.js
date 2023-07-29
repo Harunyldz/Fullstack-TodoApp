@@ -2,6 +2,7 @@ import React from 'react'
 import Modal from 'react-modal'
 import { styled } from "styled-components"
 import { CloseOutlined } from '@mui/icons-material';
+import { mobile } from '../../responsive'
 
 const DetailModal = ({ isOpen, onRequestClose, title, subject, targetDate, completed }) => {
 
@@ -55,6 +56,7 @@ const ModalContent = styled.div`
   padding: 40px;
   position: relative;
   border-radius: 10px;
+  ${mobile({ minWidth: '200px', maxWidth: '300px', padding: '25px' })};
  
   div{
     width: 100%;
@@ -67,6 +69,8 @@ const ModalContent = styled.div`
     color: white;
     border:1px solid white;
     border-radius: 20px;
+    justify-content: space-between;
+    ${mobile({ padding: '20px' })};
   }
 `
 
@@ -76,7 +80,7 @@ const CloseIcon = styled(CloseOutlined)`
     &:hover{
         color: #000; ;
     }
-    `
+`
 
 const CloseButton = styled.button`
     position: absolute;
@@ -90,6 +94,7 @@ const CloseButton = styled.button`
     align-items: center;
     justify-content: center;
     border-radius: 5px;
+    ${mobile({ width: '25px', height: '25px', top: '5px', right: '5px' })};
 `
 
 const ModalTitle = styled.h2`
@@ -99,7 +104,6 @@ const ModalTitle = styled.h2`
 const ModalState = styled.span`
     font-size: 16px;
     text-decoration: underline;
-
 `
 
 const Subject = styled.p`

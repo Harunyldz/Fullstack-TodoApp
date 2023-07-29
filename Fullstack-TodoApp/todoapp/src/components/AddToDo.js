@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { fetchData } from "../features/todoSlice";
 import { toast } from 'react-toastify'
+import { mobile } from '../responsive'
 
 
 const AddToDo = () => {
@@ -89,6 +90,7 @@ const MainDiv = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  ${mobile({ margin: '0.5rem 0', width: 'calc(100% - 1rem)', padding: '0.5rem' })};
 `
 
 const Form = styled.form`
@@ -101,6 +103,7 @@ const Form = styled.form`
         color: white;
         margin: 5px;
         margin-right: 20px;
+        ${mobile({ fontSize: '0.9rem',marginRight:'0.5rem' })};
     }
 `
 
@@ -136,12 +139,12 @@ const TitleTextarea = styled.textarea`
     font-weight: 400;
     font-family:'Montserrat', sans-serif;
     background-color: #F9B5D0;
+    ${mobile({height:'100px'})};
 
     &:focus{
     background-color: #EEEEEE;
     outline:1px solid #FF597B;
     }
-
 `
 
 const Note = styled.h6`
@@ -161,6 +164,7 @@ const Button = styled.button`
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 1px;
+    ${mobile({height:'35px',letterSpacing:'normal',padding:'5px 10px'})};
 
     &:hover{
         background-color: #eeeeee;
@@ -173,6 +177,7 @@ const DateContainer = styled.div`
      padding: 10px;
      background: #35A29F;
      border-radius: 5px;
+     ${mobile({padding:'0.2rem'})}
 `
 
 const CalendarContainer = styled.div`
@@ -197,6 +202,7 @@ const Input = styled.input`
     font-size: 16px;
     width: 120px;
     background-color: #F9B5D0;
+    ${mobile({width:'100px'})}
 
     &:focus{
     background-color: #EEEEEE;

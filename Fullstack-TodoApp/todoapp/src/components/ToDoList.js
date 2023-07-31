@@ -178,7 +178,6 @@ const ToDoList = () => {
         </>
     )
 }
-
 export default ToDoList
 
 const MainDiv = styled.div`

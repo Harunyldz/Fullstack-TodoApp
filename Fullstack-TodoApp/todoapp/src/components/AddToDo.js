@@ -23,7 +23,7 @@ const AddToDo = () => {
         return (
             <DateContainer>
                 <CalendarContainer className={className}>
-                    <Note>Başlama tarihini seçiniz</Note>
+                    <CalendarTitle>Başlama tarihini seçiniz</CalendarTitle>
                     <div>{children}</div>
                 </CalendarContainer>
             </DateContainer>
@@ -60,9 +60,9 @@ const AddToDo = () => {
                 <TitleInput type="text" placeholder="Add title.." id="title" value={titleInput} onChange={(e) => setTitleInput(e.target.value)} />
                 <TitleTextarea rows="4" cols="50" placeholder="Add subject.." value={textareaInput} onChange={(e) => setTextareaInput(e.target.value)} />
                 <div>
-                    <label htmlFor='title'>Target Date :</label>
+                    <label>Target Date :</label>
                     <DatePicker
-                        name="title"
+                        minDate={new Date()} //bugünden önceki tarihi seçilemez yaptı
                         selected={startDate}
                         onChange={(date) => setStartDate(date)}
                         dateFormat="dd/MM/yyyy"
@@ -103,7 +103,7 @@ const Form = styled.form`
         color: white;
         margin: 5px;
         margin-right: 20px;
-        ${mobile({ fontSize: '0.9rem',marginRight:'0.5rem' })};
+        ${mobile({ fontSize: '0.9rem', marginRight: '0.5rem' })};
     }
 `
 
@@ -139,7 +139,7 @@ const TitleTextarea = styled.textarea`
     font-weight: 400;
     font-family:'Montserrat', sans-serif;
     background-color: #F9B5D0;
-    ${mobile({height:'100px'})};
+    ${mobile({ height: '100px' })};
 
     &:focus{
     background-color: #EEEEEE;
@@ -147,7 +147,7 @@ const TitleTextarea = styled.textarea`
     }
 `
 
-const Note = styled.h6`
+const CalendarTitle = styled.h6`
     color: white;
     font-size: 14px;
     text-align: center;
@@ -164,7 +164,7 @@ const Button = styled.button`
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 1px;
-    ${mobile({height:'35px',letterSpacing:'normal',padding:'5px 10px'})};
+    ${mobile({ height: '35px', letterSpacing: 'normal', padding: '5px 10px' })};
 
     &:hover{
         background-color: #eeeeee;
@@ -175,13 +175,13 @@ const Button = styled.button`
 
 const DateContainer = styled.div`
      padding: 10px;
-     background: #35A29F;
+     background: #FF597B;
      border-radius: 5px;
-     ${mobile({padding:'0.2rem'})}
+     ${mobile({ padding: '0.2rem' })}
 `
 
 const CalendarContainer = styled.div`
-  background-color: #0B666A;
+    background-color: #ff8e9e;
 
   div{
     position: relative; 
@@ -202,7 +202,7 @@ const Input = styled.input`
     font-size: 16px;
     width: 120px;
     background-color: #F9B5D0;
-    ${mobile({width:'100px'})}
+    ${mobile({ width: '100px' })}
 
     &:focus{
     background-color: #EEEEEE;

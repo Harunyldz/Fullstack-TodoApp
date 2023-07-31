@@ -34,10 +34,10 @@ const EditModal = ({ isOpen, onRequestClose, _id }) => {
             setStartDate(new Date(todoToEdit.targetDate))
             setUpdatedCompleted(todoToEdit.completed)
         }
+       
     }, [todoToEdit]) //todoEdit her değiştiğinde useeffect tekrar çalışacak
 
-
-
+    
     const customStyles = {
         content: {
             top: '50%',
@@ -64,12 +64,8 @@ const EditModal = ({ isOpen, onRequestClose, _id }) => {
         );
     };
 
-    const handleCompleted = () => {
-        setUpdatedCompleted(!todoToEdit.completed)
-    }
-
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault() //submit butonuna tıklandığında sayfa yenilenmesin diye
         try {
             await axios.put(`http://localhost:5000/api/todo/${_id}`, {
                 title: updatedTitle,
@@ -77,12 +73,14 @@ const EditModal = ({ isOpen, onRequestClose, _id }) => {
                 targetDate: startDate,
                 completed: updatedCompleted
             })
-            onRequestClose()
+            onRequestClose() //modalı kapatmak için
             toast.info(`${updatedTitle} updated`, {
                 theme: 'colored',
             })
-            dispatch(fetchData())
-        } catch (error) {
+            dispatch(fetchData()) //modal kapandığında güncellenmiş veriler tabloya yansısın diye
+        }
+
+        catch (error) {
             console.error('Todo güncellenirken bir hata oluştu!', error);
         }
 
@@ -102,7 +100,7 @@ const EditModal = ({ isOpen, onRequestClose, _id }) => {
                     <TodoState>
                         <TodoStateSpan>Tamamlandı mı?</TodoStateSpan>
                         <CheckIcon
-                            onClick={handleCompleted}
+                            onClick={() => setUpdatedCompleted(!updatedCompleted)}
                             bgcolor={updatedCompleted ? "#FF597B" : "#ddd"}
                             color={updatedCompleted ? "white" : "#ccc"} />
                     </TodoState>
@@ -173,7 +171,7 @@ const Form = styled.form`
     label{
         color: white;
         margin-right: 20px;
-        ${mobile({ fontSize: '0.9rem',marginRight:'10px' })}
+        ${mobile({ fontSize: '0.9rem', marginRight: '10px' })}
     }
 `
 
@@ -232,7 +230,7 @@ const Button = styled.button`
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 1px;
-    ${mobile({padding:'0 15px',height:'35px'})}
+    ${mobile({ padding: '0 15px', height: '35px' })}
  
     &:hover{
         background-color: #eeeeee;
@@ -245,7 +243,7 @@ const DateContainer = styled.div`
      padding: 10px;
      background: #35A29F;
      border-radius: 5px;
-     ${mobile({padding:'5px'})}
+     ${mobile({ padding: '5px' })}
 
 `
 
@@ -271,7 +269,7 @@ const Input = styled.input`
     font-size: 16px;
     width: 120px;
     background-color: #F9B5D0;
-    ${mobile({width:'100px'})}
+    ${mobile({ width: '100px' })}
 
     &:focus{
     background-color: #EEEEEE;
@@ -289,7 +287,7 @@ const TodoState = styled.div`
 const TodoStateSpan = styled.span`
     margin-right: 10px;
     text-decoration: underline;
-    ${mobile({fontSize:'0.9rem'})}
+    ${mobile({ fontSize: '0.9rem' })}
 `
 const CheckIcon = styled(CheckOutlined)`
     background-color:${props => props.bgcolor};

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import {styled } from "styled-components"
+import { styled } from "styled-components"
 import { useSelector } from 'react-redux'
 import { motion } from 'framer-motion'
-import {mobile} from '../responsive'
+import { mobile } from '../responsive'
 
 const Quote = () => {
 
@@ -10,18 +10,27 @@ const Quote = () => {
     const [quoteIndex, setQuoteIndex] = useState(0)
 
     useEffect(() => {
+        let intervalId;
+
         try {
             if (quotes.length > 0) {
-                const quoteInterval = setInterval(() => {
-                    const randomIndex = Math.floor(Math.random() * quotes.length)
-                    setQuoteIndex(randomIndex)
-                }, 10000)
-                return () => clearInterval(quoteInterval)
+
+                // Bileşenin ilk render'ında interval'ı başlat
+                intervalId = setInterval(() => {
+                    const randomIndex = Math.floor(Math.random() * quotes.length);
+                    setQuoteIndex(randomIndex);
+                }, 10000);
             }
         } catch (error) {
-
+            console.log("Quote alımında bir hata oluştu! ");
         }
-    }, [quotes])
+
+        //Bileşen kapandığında intervalId yi temizle
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, [quotes]);
+
 
     return (
         <MainDiv >
@@ -30,7 +39,7 @@ const Quote = () => {
                     <QuoteContainer
                         key={quotes[quoteIndex]._id}
                         initial={{ y: 100, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1}}
+                        animate={{ y: 0, opacity: 1 }}
                         exit={{ y: -100, opacity: 0 }}
                         transition={{ duration: 1.5 }}
                     >
@@ -61,7 +70,7 @@ const MainDiv = styled.div`
     padding: 5px;
     border-radius: 10px;
     overflow: hidden;
-    ${mobile({margin:'0.5rem 0',width:'calc(100% - 1rem)'})};
+    ${mobile({ margin: '0.5rem 0', width: 'calc(100% - 1rem)' })};
 `
 
 const QuoteFrame = styled.div`
@@ -91,13 +100,13 @@ const QuoteContent = styled.p`
     display: flex;
     align-items: center;
     justify-content: center;
-    ${mobile({fontSize:'0.8rem'})};
+    ${mobile({ fontSize: '0.8rem' })};
 `
 
 const QuoteAuthor = styled.span`
     color: white;
     font-weight: 400;
-    ${mobile({fontSize:'0.8rem'})};
+    ${mobile({ fontSize: '0.8rem' })};
 
     &::before{
         content: "***";

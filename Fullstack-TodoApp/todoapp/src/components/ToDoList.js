@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchData } from "../features/todoSlice";
 import axios from 'axios'
 import { toast } from "react-toastify";
-import {mobile} from '../responsive'
+import { mobile } from '../responsive'
 
 
 const ToDoList = () => {
@@ -96,15 +96,21 @@ const ToDoList = () => {
     //Filtreleme işlemleri
     const [filterClicked, setFilterClicked] = useState(false)
     const [filterTitle, setFilterTitle] = useState("")
+    
+    const handleFilterTitle = (todo) => {
+        return (
+            filterTitle.toLocaleLowerCase() === ''
+                ? todo.title
+                : todo.title.toLocaleLowerCase().includes(filterTitle)
+        )
+    }
 
     const filteredTodos = todos.filter((todo) => {
         if (filterClicked === true) {
-            return (!todo.completed)
+            return (!todo.completed && handleFilterTitle(todo))
         } else {
             return (
-                filterTitle.toLocaleLowerCase() === ''
-                    ? todo.title
-                    : todo.title.toLocaleLowerCase().includes(filterTitle)
+                handleFilterTitle(todo)
             )
         }
     })
@@ -139,8 +145,10 @@ const ToDoList = () => {
                                         value={filterTitle}
                                         onChange={(e) => setFilterTitle(e.target.value)}>
                                     </Search>
-                                    <div>
-                                        <Filter onClick={()=>setFilterClicked(!filterClicked)} color={filterClicked ? "inherit" : "gray"} />
+                                    <div title="Tamamlanmamış todoları göster">
+                                        <FilterIcon
+                                            onClick={() => setFilterClicked(!filterClicked)}
+                                            color={filterClicked ? "inherit" : "gray"} />
                                     </div>
                                 </ThFilter>
                                 <Th>Actions</Th>
@@ -186,7 +194,7 @@ const MainDiv = styled.div`
     height: 40vh;
     padding: 1rem;
     font-family:'Montserrat', sans-serif;
-    ${mobile({margin:'0 0 0.5rem 0',width:'calc(100% - 1rem)',padding:'0.2rem',height:'50vh'})};
+    ${mobile({ margin: '0 0 0.5rem 0', width: 'calc(100% - 1rem)', padding: '0.2rem', height: '50vh' })};
 `
 
 const TableWrapper = styled.div`
@@ -197,7 +205,7 @@ const TableWrapper = styled.div`
 
 const Table = styled.table`
     width: 100%;
-    ${mobile({fontSize:'0.8rem'})};
+    ${mobile({ fontSize: '0.8rem' })};
 `
 
 const Tbody = styled.tbody`
@@ -218,7 +226,7 @@ const Th = styled.th`
     background-color: beige;
     height: 40px;
     color:#FF597B ;
-    ${mobile({height:'35px'})};
+    ${mobile({ height: '35px' })};
 `
 
 const ThFilter = styled(Th)`
@@ -235,7 +243,7 @@ const ThFilter = styled(Th)`
     }
 `
 
-const Filter = styled(FilterAltOutlined)`
+const FilterIcon = styled(FilterAltOutlined)`
     margin: 0 5px;
     cursor: pointer;
     color: ${(props) => props.color};
@@ -253,13 +261,13 @@ const Search = styled.input`
     font-family:'Montserrat', sans-serif;
     font-weight: 400;
     text-transform:capitalize;
-    ${mobile({fontSize:'0.8rem'})};
+    ${mobile({ fontSize: '0.8rem' })};
 `
 
 const Td = styled.td`
     height: 40px;
     padding: 0 10px;
-    ${mobile({height:'35px'})};
+    ${mobile({ height: '35px' })};
 `
 
 const TdId = styled(Td)`
